@@ -24,17 +24,23 @@ class EventListener implements Listener
         switch ($blockid){
             case 116:
                 $event->setCancelled();
-                $player->sendPopup("現在エンチャントは使用できません");
+                $player->sendPopup('§c現在エンチャントは使用できません');
                 break;
 
             case 26:
                 $event->setCancelled();
-                $player->sendForm(new Bed());
+                $player->sendPopup('§bスニークしてタップすると、ベッドメニューを開きます');
+                if ($player->isSneaking() === true){
+                    $player->sendForm(new Bed());
+                }
                 break;
 
             case 145:
                 $event->setCancelled();
-                $player->sendForm(new Anvil());
+                $player->sendPopup('§bスニークしてタップすると、金床メニューを開きます');
+                if ($player->isSneaking() === true){
+                    $player->sendForm(new Anvil());
+                }
                 break;
         }
     }
