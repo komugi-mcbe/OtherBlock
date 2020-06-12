@@ -18,16 +18,11 @@ Class Anvil implements Form
         switch ($data) {
             case 0:
             $item = $player->getInventory()->getItemInHand();
-            if ($item instanceof TieredTool && $item instanceof Bow && $item instanceof Armor) {
-                $player->sendMessage('1');
-                if ($item->getDamage() > 1) {
-                    $player->sendForm(new Repair($item));
-                    $player->sendMessage('2');
-                }else{
-                    $player->sendMessage('3');
-                }
-            }else{
-                $player->sendMessage('4');
+            if (!$item instanceof TieredTool or !$item instanceof Bow or !$item instanceof Armor) {
+                $player->sendForm(new Repair($item));
+            } else {
+                $player->sendMessage(' §c>> §fそのアイテムは修理不可能です');
+                return;
             }
             break;
 
