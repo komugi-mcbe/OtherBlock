@@ -5,6 +5,7 @@ namespace xtakumatutix\otherb\Form;
 use pocketmine\form\Form;
 use pocketmine\Player;
 use pocketmine\item\Item;
+use pocketmine\item\Durable;
 use xtakumatutix\otherb\Form\type\Repair;
 use xtakumatutix\otherb\Form\type\Setitemname;
 
@@ -18,12 +19,14 @@ Class Anvil implements Form
         switch ($data) {
             case 0:
             $item = $player->getInventory()->getItemInHand();
-            if (!$item instanceof Durable) {
+            if ($item instanceof Durable) {
                 if ($item->getDamage() > 0) {
                     $player->sendForm(new Repair($item));
                 } else {
-                    $player->sendMessage(' §c >> §fそのアイテムは修理不可能です');
+                    $player->sendMessage(' §c >> §fそのアイテムは修復不要です');
                 }
+            }else{
+                $player->sendMessage(' §c >> §fそのアイテムは修理不可能です');
             }
             break;
 

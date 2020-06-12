@@ -20,7 +20,7 @@ Class Repair implements Form
             return;
         }
         if ($data === true) {
-            if(EconomyAPI::getInstance()->myMoney($player->getName()) > 24999){
+            if(EconomyAPI::getInstance()->myMoney($player->getName()) > 35000){
                 $player->getInventory()->removeItem($this->item);
                 $this->item->setDamage(0);
                 $player->getInventory()->addItem($this->item);
