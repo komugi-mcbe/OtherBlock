@@ -1,49 +1,45 @@
 <?php
 
-namespace xtakumatutix\otherb\Form;
+namespace xtakumatutix\otherb\Form\type;
 
 use pocketmine\form\Form;
 use pocketmine\Player;
-use xtakumatutix\otherb\Form\type\Repair;
-use xtakumatutix\otherb\Form\type\Setitemname;
+use pocketmine\item\Item;
+use onebone\economyapi\EconomyAPI;
 
-Class Anvil implements Form
+Class Setitemname implements Form
 {
+    public function __construct($item)
+    {
+        $this->item = $item;
+    }
+
     public function handleResponse(Player $player, $data): void
     {
         if ($data === null) {
             return;
         }
-        switch ($data) {
-        $item = $player->getInventory()->getItemInHand();
-            case 0:
-            if ($item instanceof TieredTool && $item instanceof Bow && $item instanceof Armor) {
-                if ($item->getDamage() < 1) {
-                    $player->sendForm(new Repair($item));
-                }
-            }
-            break;
-
-            case 1:
-            $player->sendForm(new Setitemname($item));
-            break;
+        if(EconomyAPI::getInstance()->myMoney($player->getName()) > 15000){
+            $player->getInventory()->removeItem($this->item);
+            $this->item->setCustomName($data[0]);
+            $player->getInventory()->addItem($this->item);
+            EconomyAPI::getInstance()->reduceMoney($player, 15000);
+        }else{
+            $player->sendMessage(' §c>> §fお金が足りません');
         }
     }
 
     public function jsonSerialize()
     {
         return [
-            'type' => 'form',
-            'title' => '金床',
-            'content' => '金床のメニューです！',
-            'buttons' => [
+            'type' => 'custom_form',
+            'title' => 'アイテム名変更',
+            'content' => [
                 [
-                    'text' => 'アイテムを修復する'
-                ],
-                [
-                    'text' => 'アイテムの名前を変える'
+                    'type' => 'input',
+                    'text' => "費用は15000KGです\n文字数などに制限はありませんが、悪用は遠慮ください。"
                 ]
-            ],
+            ]
         ];
     }
 }
