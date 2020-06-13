@@ -24,6 +24,7 @@ Class Setitemname implements Form
             $this->item->setCustomName($data[0]);
             $player->getInventory()->addItem($this->item);
             EconomyAPI::getInstance()->reduceMoney($player, 15000);
+            $player->sendMessage(' §a>> §fアイテム名を「'.$data[0].'」にしました');
         }else{
             $player->sendMessage(' §c>> §fお金が足りません');
         }

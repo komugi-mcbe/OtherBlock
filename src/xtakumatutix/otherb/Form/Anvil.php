@@ -23,10 +23,10 @@ Class Anvil implements Form
                 if ($item->getDamage() > 0) {
                     $player->sendForm(new Repair($item));
                 } else {
-                    $player->sendMessage(' §c >> §fそのアイテムは修復不要です');
+                    $player->sendMessage(' §c>> §fそのアイテムは修復不要です');
                 }
             }else{
-                $player->sendMessage(' §c >> §fそのアイテムは修理不可能です');
+                $player->sendMessage(' §c>> §fそのアイテムは修理不可能です');
             }
             break;
 
